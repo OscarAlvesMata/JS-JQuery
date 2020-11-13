@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<title> Desafio para a semana </title>
+<link href="css/normalize.css" rel="stylesheet">
+<link href="css/estilos.css" rel="stylesheet">
+<style>
+    body { background-size: cover; }
+</style>
+</head>
+<body>
+<div id="container">
+    <h1>Desenvolver um relógio com JavaScript</h1>
+    <hr>
+    <p>Para resolver este desafio, utilize diversos recursos da linguagem como:</p>
+    <ul>
+        <li>Variáveis</li>
+        <li>Objeto Date e seus métodos (pesquisar)</li>
+        <li>Condicionais</li>
+        <li>Temporizadores</li>
+        <li>Funções</li>
+    </ul>
+    <p>O resultado do relógio deve ser exibido no corpo da página.</p>
+    <hr>
+      <div id="timer"></div>
+    <hr>
+</div>
+
+<script>
+'use strict';   
+    
+    var imagens, hr, min, seg, hora;
+    
+    imagens = ["images/manha.jpg", "images/tarde.jpg", "images/noite.jpg"];
+
+    // funcao para acrescetar 0 para acrescentar a frente dig
+    function formatarDoisDig( dig ){
+        (dig < 10) ? dig = "0" + dig : dig;
+        return dig;
+    }
+    
+    // funcao para criar o relogio
+    function relogio(){
+        /*
+        Site utilizado para buscar os médotos do Date()
+        http://www.w3schools.com/js/js_date_methods.asp
+        */
+        var objdate = new Date();   // Criando objeto Date
+        hr = objdate.getHours();    // Obtendo a hora
+        min = objdate.getMinutes(); // Obtendo os minutos
+        seg = objdate.getSeconds(); // Obtendo os segundos
+        
+        // Montando a string no formato do relogio
+        hora = formatarDoisDig(hr) + ":" + formatarDoisDig(min) + ":" + formatarDoisDig(seg);  
+        
+        // Preenchendo a tag div id=timer e adicionando CSS.
+        var vtimer = document.getElementById("timer");
+        vtimer.innerHTML = "<p><b>"+hora+"</b></p>";
+        vtimer.style.color = "red";
+        vtimer.style.textAlign = "center";
+        
+        // Adicionado CSS na tag body
+        document.querySelector("body").classList.add("body");
+        
+        // Alterando a imagem de fundo
+        var vbody = document.querySelector("body");
+        if ((hora >= "06:00:00") && (hora < "12:00:00")){
+            vbody.style.backgroundImage = "url("+imagens[0]+")";
+        } else if ((hora >= "12:00:00") && (hora <= "18:00:00")) {
+            vbody.style.backgroundImage = "url("+imagens[1]+")";
+        } else {
+            vbody.style.backgroundImage = "url("+imagens[2]+")";
+        }
+    
+        // Acionado o temporizador para ativar o relogio a cada 1 segundo.
+        setTimeout(relogio, 1000);  
+    }
+
+    // Acionado o relogio.
+    relogio();  
+    
+</script>
+
+</body>
+    
+</html>
